@@ -1,0 +1,25 @@
+.wrapper{
+    position:relative;
+    width:500px;
+    height:500px;
+    background: #000;
+}
+.already{
+    background:#666;
+}
+.next,.moving{
+    background:#ccc;
+}
+.msg{
+    font-size:24px;
+    position:absolute;
+    padding:20px 0;
+    top:130px;
+    background:#ccc;
+    width:100%;
+    text-align:center;
+    z-index:3;
+}
+.moving {
+    background: red;
+}
