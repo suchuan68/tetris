@@ -12,7 +12,7 @@ let WIDTH = 500;
 
 
 let speed,//interval对象
-    everyTime = 2000,//速度
+    everyTime = 200,//速度
     state = 0;//游戏状态
 
 class Model {
@@ -131,4 +131,5 @@ class Model {
         this.showOther(x,y);
     }
 }
+
 var shapes = new Model();

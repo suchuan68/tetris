@@ -4,6 +4,7 @@ class Control {
         this.dot = [[]];//记录地图坐标，dot[x][y]=0，表示坐标(x,y)没有块，否则有块
         this.lose = 0;
     }
+
     init(){ //初始化地图坐标
         for(let i = 0;i<COLS;i++){
             this.dot[i] = [];
@@ -13,6 +14,7 @@ class Control {
             }
         }
     }
+
     checkDown(){
         for(let i in shapes.nowDot){
             let x = shapes.nowDot[i][0];
@@ -30,7 +32,7 @@ class Control {
         return 1;
     }
     checkRight(){
-    for(let i in shapes.nowDot){
+        for(let i in shapes.nowDot){
             let x = shapes.nowDot[i][0] + 1;
             let y = shapes.nowDot[i][1];
             if(x >= COLS || this.dot[x][y] !== 0) return 0;
@@ -43,7 +45,7 @@ class Control {
         let t = (shapes.state + 1) % 4;
         let nextDot;
         nextDot = shapes.getDot(x,y,shapes.type,t);
-        for(i in nextDot){
+        for(let i in nextDot){
             let x = nextDot[i][0];
             let y = nextDot[i][1];
             if( x < 0 || x > COLS-1 || y > ROWS-1 || this.dot[x][y] !== 0) return 0;
@@ -56,13 +58,12 @@ class Control {
             for(let j = 0;j < ROWS;j++){
                 if(this.dot[i][j] != 0){
                     shapes.dotToReal(i,j);
-                    $(".wrapper").append("<div class='already' style='width:"+squareW+"px;height:"+squareH+"px;position:absolute;top:"+shapes.realY+"px;left:"+shapes.realX+"px;'></div>");
+                    $(".wrapper").append("<div class='already' style='width:"+SQUAREW+"px;height:"+SQUAREH+"px;position:absolute;top:"+shapes.realY+"px;left:"+shapes.realX+"px;'></div>");
                 }
             }
         }
     }
     checkDel(){//消行
-        let temp = [];
         let from = ROWS - 1;
         for(from;from > 0;from--){
             let flag = 0;
@@ -85,7 +86,7 @@ class Control {
         $(".score").html("得分:"+this.score+"分");
     }
     moveNext(){//下移方块
-        console.log(this);
+        //this.checkDown = this.checkDown.bind(this);
         if(this.checkDown()) {
             shapes.moveDown();
         } else{//不可移了
@@ -108,7 +109,9 @@ class Control {
         }
     }
     run(){
-        speed = setInterval(this.moveNext,everyTime);
+        speed = setInterval(()=>{
+            this.moveNext()
+        },everyTime);
     }
     start(){//开始游戏
         shapes.nextShow(COLS+3,0,0);
@@ -119,7 +122,9 @@ class Control {
         this.run();
     }
     restart(){//重新开始
-        speed = setInterval(this.moveNext,everyTime);
+        speed = setInterval(()=>{
+            this.moveNext()
+        },everyTime);
     }
     pause(){
         clearInterval(speed);
@@ -130,13 +135,19 @@ var shapesControl = new Control();
 
 $(document).keydown(function(event){
     if(event.keyCode == 37) {
-        if(shapesControl.checkLeft()) shapes.moveLeft();
+        if(shapesControl.checkLeft()) {
+            shapes.moveLeft();
+        }
     }
     else if(event.keyCode == 39) {
-        if(shapesControl.checkRight()) shapes.moveRight();
+        if(shapesControl.checkRight()) {
+            shapes.moveRight();
+        }
     }
     else if(event.keyCode == 38) {
-        if(shapesControl.checkChange()) shapes.change();
+        if(shapesControl.checkChange()) {
+            shapes.change();
+        }
     }
     else if(event.keyCode == 40){
         shapesControl.moveNext();
@@ -152,7 +163,6 @@ $(document).keydown(function(event){
             state = 2;
         } else{
             shapesControl.restart();
-            $(".wrapper .msg").remove();
             state = 1;
         }
     }
