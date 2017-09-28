@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        html,body {
+            height:100%;
+        }
+        #container {
+            width:100%;
+            height: 100%;
+            margin: 0 auto;
+            position: relative;
+            overflow: auto;
+        }
+        #container li {
+            list-style: none;
+            height:30px;
+            position: absolute;
+            width:100%;
+        }
+        span {
+            font-size: 18px;
+            padding:0 5px;
+            border-right:1px solid #ddd;
+            color:#333;
+        }
+    </style>
+</head>
+<body>
+<ul id="container">
+
+</ul>
+<div style="clear: both;"></div>
+<script>
+    let container = document.getElementById('container');
+    container.onscroll =function () {
+        var sTop = container.scrollTop;
+        var start = parseInt(sTop/30) - 10;
+        var end = start+50;
+    }
+    class list{
+        constructor(dataList,everyPageData){
+            this.everyPageData = everyPageData; //每一页显示数据
+            this.pageNum = dataList.length/everyPageData;   //总页数
+            this.dataList = [];
+        }
+        initData(){
+            for(let i=0;i<10000;i++){
+                let child = [];
+                for(let j=1;j<34;j++){
+                    child.push({'name':33*i+j,'age':33*i+j})
+                }
+                this.dataList.push(child);
+            }
+        }
+        initDom(){
+            for(let i=0;i<=this.everyPageData;i++){
+                var liEle = document.createElement('li');
+                if(i===this.everyPageData){
+                    var idx = this.dataList.length;
+                    liEle.setAttribute('idx',idx-1);
+                    liEle.style.top =idx-1*25 + 'px';
+                    this.appendChild(liEle);
+                    container.append(liEle);
+                    return;
+                }
+                liEle.setAttribute('idx',i);
+                liEle.style.top =i*25 + 'px';
+                this.appendChild(liEle);
+                container.append(liEle);
+            }
+        }
+        appendChild(liEle){
+            for(let j=0;j<this.dataList[0].length;j++){
+                var spanEle = document.createElement('span');
+                var spanText = document.createTextNode(this.dataList[0][j].name+','+this.dataList[0][j].age);
+                spanEle.append(spanText);
+                liEle.appendChild(spanEle);
+            }
+        }
+        showData(){
+
+        }
+    }
+    let newList = new list(100000,50);
+    newList.initData();
+    newList.initDom();
+
+
+</script>
+</body>
+</html>

@@ -83,10 +83,9 @@ class Control {
             }
         }
         this.paint();//重绘
-        $(".score").html("得分:"+this.score+"分");
+        $(".score").text("得分:"+this.score+"分");
     }
     moveNext(){//下移方块
-        //this.checkDown = this.checkDown.bind(this);
         if(this.checkDown()) {
             shapes.moveDown();
         } else{//不可移了
@@ -132,6 +131,7 @@ class Control {
 }
 
 var shapesControl = new Control();
+
 
 $(document).keydown(function(event){
     if(event.keyCode == 37) {

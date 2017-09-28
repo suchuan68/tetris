@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script>
+    var a = 0;
+    class User {
+        constructor(){
+            this.a=2
+        }
+        print(){
+            console.log(this.a);
+            setTimeout(function () {
+                console.log(this.a);
+            },500)
+        }
+    }
+    var newUser = new User();
+    newUser.print();
+</script>
+</body>
+</html>
